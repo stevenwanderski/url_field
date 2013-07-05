@@ -1,29 +1,63 @@
-# UrlField
+#URL field
 
-TODO: Write a gem description
+Sometimes you want to accept a URL field on one of your models. Take for example a Company model with a website field. You want the URL to always have "http://" but sometimes users enter http://, sometimes they dont.
 
-## Installation
+Your app shouldn't care. Enter the URL field plugin.
 
-Add this line to your application's Gemfile:
+This simple plugin allows you to enter either "http://www.example.com" or just "www.example.com" and in either case it will store "http://www.example.com"
 
-    gem 'url_field'
+Note: this is simply a Rails 3 gem version of Paul Campbell's Rails 2 plugin ("http://www.pabcas.com":http://www.pabcas.com). All gem logic is thanks to Paul!
 
-And then execute:
+##Install
 
-    $ bundle
+Include the following in your Gemfile:
 
-Or install it yourself as:
+```ruby
+gem 'url_field', :git => "git://github.com/wandoledzep/url_field.git"
+```
 
-    $ gem install url_field
+##Usage
 
-## Usage
+```ruby
+class Company < ActiveRecord::Base
+  url_field :website
+end
 
-TODO: Write usage instructions here
+@company = Company.new
+@company.website = "www.example.com"
+@company.save
+@company.website # => "http://www.example.com"
+```
 
-## Contributing
+Https? That works too (but one way only)
+```ruby
+@company.website = "https://www.example.com"
+@company.save
+@company.website # => "https://www.example.com"
+```
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Added some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+##Extra
+
+###Multiple fields
+
+If you have multiple url_fields in a single model, just pass them as arguments to the url_field method, eg:
+
+```ruby
+class Company < ActiveRecord::Base
+  url_field :website, :support_website, :more_info_website
+end
+```
+
+###Access the correctly formed URL at any time
+
+If you want access to the correctly formatted URL at any time (for example if you're passing it to URI.parse, before you save your model), you can prefix your URL field method name with "cleaned_" eg. "cleaned_website" if your field name was website:
+
+```ruby
+class Company < ActiveRecord::Base
+  url_field :website
+end
+
+@company = Company.new
+@company.website = "www.example.com"
+@company.cleaned_website # => "http://www.example.com"
+```
