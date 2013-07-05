@@ -6,7 +6,7 @@ Your app shouldn't care. Enter the URL field plugin.
 
 This simple plugin allows you to enter either "http://www.example.com" or just "www.example.com" and in either case it will store "http://www.example.com"
 
-Note: this is simply a Rails 3 gem version of Paul Campbell's Rails 2 plugin ("http://www.pabcas.com":http://www.pabcas.com). All gem logic is thanks to Paul!
+Note: this is simply a Rails 3 gem version of Paul Campbell's Rails 2 plugin (https://github.com/paulca/url_field). All gem logic is thanks to Paul!
 
 ##Install
 
